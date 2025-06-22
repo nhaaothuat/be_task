@@ -1,22 +1,33 @@
 package com.example.task_manager.utils;
 
+import com.example.task_manager.enities.User;
+import com.example.task_manager.repositories.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import javax.swing.text.html.Option;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Component
+@RequiredArgsConstructor
 public class JwtUtils {
+
+    private final UserRepository userRepository;
 
     public String generateToken(UserDetails userDetails){
         return generateToken(new HashMap<>(),userDetails);
@@ -35,7 +46,7 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public boolean isTokenValid(String token,UserDetails userDetails){
+    public boolean isTokenValid(String token, UserDetails userDetails){
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
@@ -64,5 +75,15 @@ public class JwtUtils {
                 .getPayload();
     }
 
+
+    public User getLoggedInUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication!=null && authentication.isAuthenticated()){
+           User user = (User) authentication.getPrincipal();
+            Optional<User> optionalUser = userRepository.findById(user.getId());
+            return optionalUser.orElse(null);
+        }
+        return null;
+    }
 
 }

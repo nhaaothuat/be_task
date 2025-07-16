@@ -1,5 +1,7 @@
 # Task Management System - Spring Boot Backend
 
+<img width="1312" height="599" alt="image" src="https://github.com/user-attachments/assets/127f0211-4ee1-4667-8e61-40f2a35e0a2a" />
+
 ## 📝 Overview
 A RESTful API for task management with:
 - User authentication (signup/login)
@@ -12,21 +14,6 @@ A RESTful API for task management with:
 - **Database**: MySQL
 - **Authentication**: JWT
 - **Architecture**: MVC pattern
-
-## 📂 Project Structure
-src/
-├── main/
-│ ├── java/
-│ │ ├── configs/ # App configurations
-│ │ ├── controller/ # API controllers
-│ │ ├── dto/ # Data Transfer Objects
-│ │ ├── entities/ # JPA entities
-│ │ ├── enums/ # Enumerations
-│ │ ├── repositories/ # Spring Data JPA
-│ │ ├── services/ # Business logic
-│ │ └── utils/ # Utilities
-│ └── resources/ # application.properties
-└── test/ # Unit tests
 
 
 ## 🌐 API Endpoints
